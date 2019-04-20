@@ -104,7 +104,6 @@
                                     <th>แก้ไข</th>
                                     <th>ลบ</th>
                                     <th>ออกเอกสาร</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -132,87 +131,218 @@
                                         <%= SellCar[i].ID_TRN_bill %>
                                     </td>
                                     <td>
-                                        <a href="" data-toggle="modal" data-toggle="modal"
-                                            data-target=".EditModalCenter">แก้ไข</a>
+                                        <% for(var j=0; j < Cus.length; j++) { %>
+                                        <%if(SellCar[i].ID_MST_customer === Cus[j].ID_MST_customer){%>
+                                        <a href="" class="btn btn-outline-warning btn-block" data-toggle="modal"
+                                            data-toggle="modal" data-target=".EditModalCenter" onclick="feedCar('<%= SellCar[i]._id  %>','<%= SellCar[i].ID_TRN_sellCar %>',
+                                                '<%= SellCar[i].sell_car_date %>','<%= SellCar[i].sell_car_price %>',
+                                                '<%= SellCar[i].ID_MST_employeeId %>','<%= SellCar[i].ID_MST_car %>','<%= SellCar[i].ID_MST_customer %>',
+                                                '<%= SellCar[i].ID_TRN_bill %>','<%= Cus[i].customer_type %>','<%= Cus[i].customer_citizen_id %>'
+                                                ,'<%= Cus[i].customer_first_name %>','<%= Cus[i].customer_last_name %>','<%= Cus[i].customer_telephone %>'
+                                                ,'<%= Cus[i].customer_email %>','<%= Cus[i].address.address_id %>','<%= Cus[i].address.bloc %>'
+                                                ,'<%= Cus[i].address.district %>','<%= Cus[i].address.sub_district %>','<%= Cus[i].address.province %>'
+                                                ,'<%= Cus[i].address.postcode %>')">แก้ไข</a>
+                                        <%}%>
+                                        <%}%>
                                     </td>
                                     <td>
-                                        <a href="/sellcar/delete/<%= SellCar[i]._id %>">ลบ</a>
+                                        <a href="/sellcar/delete/<%= SellCar[i]._id %>"
+                                            class="btn btn-outline-danger btn-block">ลบ</a>
                                     </td>
                                     <td>
-                                        <a href="">ออกเอกสาร</a>
+                                        <div>
+                                            <button type="submit" class="btn btn-outline-primary btn-block"
+                                                style="font-size: 15px; width: 100%"
+                                                onclick="printing()">ออกเอกสาร</button>
+                                        </div>
                                     </td>
                                 </tr>
                                 <!-- Modal แก้ไข -->
                                 <div class="modal fade EditModalCenter" tabindex="-1" role="dialog"
                                     aria-labelledby="EditModalCenter" aria-hidden="true">
                                     <div class="modal-dialog modal-xl" role="document">
-                                        <form action="/sellcar/update/<%= SellCar[i]._id %>" method="post">
+                                        <form action="sellcar/update" method="post">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="AddModalCenter">
-                                                        แก้ไขข้อมูลขายรถ</h5>
+                                                        แก้ไขข้อมูลการขาย</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-
+                                                    <h5>รายละเอียดรถ</h5>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
-                                                                id="inputGroup-sizing-default">รหัสการขายรถ</span>
+                                                                id="inputGroup-sizing-default">รหัสการขาย</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].ID_TRN_sellCar %>" type="text" name="ID_TRN_sellCar" id="id"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input type="text" name="_id" id="editid" style="display: none">
+                                                        <input type="text" name="ID_TRN_sellCar" id="editSellcar_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
-                                                                id="inputGroup-sizing-default">วันที่ขาย</span>
+                                                                id="inputGroup-sizing-default">รหัสรถ</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].sell_car_date %>" type="text" name="sell_car_date" id="username"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input type="text" name="ID_MST_car" id="editCar_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
                                                                 id="inputGroup-sizing-default">ราคาขาย</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].sell_car_price %>" type="text" name="sell_car_price" id="password"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input type="text" name="sell_car_price" id="editSellcar_price"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
                                                     </div>
+                                                    <hr>
+                                                    <h5>รายละเอียดลูกค้า</h5>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
-                                                                id="inputGroup-sizing-default">พนักงานที่ขาย</span>
+                                                                id="inputGroup-sizing-default">ประเภทลูกค้า</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].ID_MST_employeeId %>" type="text" name="ID_MST_employeeId" id="firstname"
-                                                            class="form-control" aria-label="Sizing example input">
-                                                    </div>
-                                                    <div class="input-group mb-3">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"
-                                                                id="inputGroup-sizing-default">รหัสรถที่ขาย</span>
-                                                        </div>
-                                                        <input value="<%= SellCar[i].ID_MST_car %>" type="text" name="ID_MST_car" id="lastname"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input readonly type="text" maxlength="13" name="customer_type"
+                                                            id="editCus_type" class="form-control"
+                                                            aria-label="Sizing example input" required>
                                                     </div>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
                                                                 id="inputGroup-sizing-default">รหัสลูกค้า</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].ID_MST_customer %>" type="text" name="ID_MST_customer" id="email"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input type="text" name="customer_id" id="editCus_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
                                                     </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">หมายเลขประจำตัวผู้เสียภาษี</span>
+                                                        </div>
+                                                        <input onkeypress="return isNumber(event)" type="text"
+                                                            maxlength="13" name="customer_citizen_id"
+                                                            id="editCus_citizen_id" class="form-control"
+                                                            aria-label="Sizing example input" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">ชื่อลูกค้า</span>
+                                                        </div>
+                                                        <input type="text" name="customer_first_name"
+                                                            id="editCus_first_name" class="form-control"
+                                                            aria-label="Sizing example input" required>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">นามสกุล</span>
+                                                        </div>
+                                                        <input type="text" name="customer_last_name"
+                                                            id="editCus_last_name" class="form-control"
+                                                            aria-label="Sizing example input" required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">หมายเลขโทรศัพท์</span>
+                                                        </div>
+                                                        <input onkeypress="return isNumber(event)" type="text"
+                                                            maxlength="10" name="customer_telephone"
+                                                            id="editCus_telephone" class="form-control"
+                                                            aria-label="Sizing example input" required>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">อีเมล</span>
+                                                        </div>
+                                                        <input type="text" name="customer_email" id="editCus_email"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <hr>
+                                                    <h5>รายละเอียดที่อยู่ลูกค้า</h5>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">บ้านเลขที่</span>
+                                                        </div>
+                                                        <input type="text" name="address_id" id="editCus_address_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">ล็อค/ซอย</span>
+                                                        </div>
+                                                        <input type="text" name="bloc" id="editCus_bloc"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">อำเภอ</span>
+                                                        </div>
+                                                        <input type="text" name="district" id="editCus_district"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">ตำบล</span>
+                                                        </div>
+                                                        <input type="text" name="sub_district" id="editCus_sub_district"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">จังหวัด</span>
+                                                        </div>
+                                                        <input type="text" name="province" id="editCus_province"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">รหัสไปรษณีย์</span>
+                                                        </div>
+                                                        <input onkeypress="return isNumber(event)" type="text"
+                                                            maxlength="5" name="postcode" id="editCus_postcode"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <hr>
+                                                    <h5>รายละเอียดการขาย</h5>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"
                                                                 id="inputGroup-sizing-default">หมายเลขบิล</span>
                                                         </div>
-                                                        <input value="<%= SellCar[i].ID_TRN_bill %>" type="text" name="ID_TRN_bill" id="email"
-                                                            class="form-control" aria-label="Sizing example input">
+                                                        <input type="text" name="ID_TRN_bill" id="editBill_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">วันที่ขาย</span>
+                                                        </div>
+                                                        <input type="date" name="sell_car_date" id="editSellcar_date"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"
+                                                                id="inputGroup-sizing-default">รหัสพนักงาน</span>
+                                                        </div>
+                                                        <input type="text" name="ID_MST_employeeId" id="editEmp_id"
+                                                            class="form-control" aria-label="Sizing example input"
+                                                            required>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -231,7 +361,6 @@
             </div>
         </div>
     </main>
-
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -245,6 +374,38 @@
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">
         $('#sampleTable').DataTable();
+        $('#sampleTable').DataTable();
+        var feedCar = (_id, ID_TRN_sellCar, sell_car_date, sell_car_price, ID_MST_employeeId,
+            ID_MST_car, ID_MST_customer, ID_TRN_bill, customer_type, customer_citizen_id, customer_first_name, customer_last_name
+            , customer_telephone, customer_email, address_id, bloc, district, sub_district, province, postcode) => {
+
+            _id: $('#editid').val(_id)
+            ID_TRN_sellCar: $('#editSellcar_id').val(ID_TRN_sellCar)
+            sell_car_date: $('#editSellcar_date').val(sell_car_date)
+            sell_car_price: $('#editSellcar_price').val(sell_car_price)
+            ID_MST_employeeId: $('#editEmp_id').val(ID_MST_employeeId)
+            ID_MST_car: $('#editCar_id').val(ID_MST_car)
+            ID_MST_customer: $('#editCus_id').val(ID_MST_customer)
+            ID_TRN_bill: $('#editBill_id').val(ID_TRN_bill)
+            customer_type: $('#editCus_type').val(customer_type)
+            customer_citizen_id: $('#editCus_citizen_id').val(customer_citizen_id)
+            customer_first_name: $('#editCus_first_name').val(customer_first_name)
+            customer_last_name: $('#editCus_last_name').val(customer_last_name)
+            customer_telephone: $('#editCus_telephone').val(customer_telephone)
+            customer_email: $('#editCus_email').val(customer_email)
+            adress: {
+                address_id: $('#editCus_address_id').val(address_id)
+                bloc: $('#editCus_bloc').val(bloc)
+                district: $('#editCus_district').val(district)
+                sub_district: $('#editCus_sub_district').val(sub_district)
+                province: $('#editCus_province').val(province)
+                postcode: $('#editCus_postcode').val(postcode)
+            }
+        }
+
+        function printing() {
+            window.print();
+        }
     </script>
 </body>
 

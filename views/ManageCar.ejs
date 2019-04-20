@@ -197,6 +197,13 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">รหัสลูกค้า</span>
+                                </div>
+                                <input type="text" name="customer_id" id="customer_id"
+                                    class="form-control" aria-label="Sizing example input" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
                                     <span class="input-group-text"
                                         id="inputGroup-sizing-default">หมายเลขประจำตัวผู้เสียภาษี</span>
                                 </div>
@@ -431,7 +438,7 @@
             car_license, car_repair_cost, car_status,
             car_cost, car_price_sell) => {
             // console.log(ID_MST_car);
-            
+
             _id: $('#editid').val(_id)
             ID_MST_car: $('#editID_MST_car').val(ID_MST_car)
             car_company: $('#editcar_company').val(car_company)

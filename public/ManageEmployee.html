@@ -38,7 +38,7 @@
                 <input class="app-search__input" type="search" placeholder="Search">
                 <button class="app-search__button"><i class="fa fa-search"></i></button>
             </li>
-            
+
             <!-- User Menu-->
             <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"
                     aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
@@ -76,8 +76,8 @@
                 <ul class="treeview-menu">
                     <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i>
                             รายวัน</a></li>
-                    <li><a class="treeview-item" href="#" target="_blank"
-                            rel="noopener"><i class="icon fa fa-circle-o"></i> รายเดือน</a></li>
+                    <li><a class="treeview-item" href="#" target="_blank" rel="noopener"><i
+                                class="icon fa fa-circle-o"></i> รายเดือน</a></li>
                     <li><a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> รายปี</a></li>
                 </ul>
             </li>
@@ -109,6 +109,7 @@
                                     <th>Age</th>
                                     <th>Start date</th>
                                     <th>Salary</th>
+                                    <th>ออกเอกสาร</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,6 +120,9 @@
                                     <td>61</td>
                                     <td>2011/04/25</td>
                                     <td>$320,800</td>
+                                    <td>
+                                        <button type="button" onclick="print()">ออกเอกสาร</button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Garrett Winters</td>
@@ -254,6 +258,10 @@
             })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-72504830-1', 'auto');
             ga('send', 'pageview');
+        }
+
+        function print() {
+            window.print();
         }
     </script>
 </body>
