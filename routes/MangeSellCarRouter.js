@@ -11,6 +11,7 @@ MangeSellCarRouter.route('/').get(function (req, res) {
     } else {
       // res.send(SellCar)
       Cus.find({ customer_type: "ซื้อ" }, function (err, Cus) {
+        // console.log(Cus.length);
         res.render('ManageSellCar', { SellCar: SellCar, Cus: Cus });
       });
     }
@@ -49,13 +50,13 @@ MangeSellCarRouter.post('/update', (req, res, next) => {
           customer_telephone: req.body.customer_telephone,
           customer_email: req.body.customer_email,
           ID_MST_customer: req.body.customer_id,
-          address : {
-            address_id : req.body.address_id,
-            bloc : req.body.bloc,
-            district : req.body.district,
-            sub_district : req.body.sub_district,
-            province : req.body.province,
-            postcode : req.body.postcode
+          address: {
+            address_id: req.body.address_id,
+            bloc: req.body.bloc,
+            district: req.body.district,
+            sub_district: req.body.sub_district,
+            province: req.body.province,
+            postcode: req.body.postcode
           }
         }, (err, Cus) => {
           if (err) {
